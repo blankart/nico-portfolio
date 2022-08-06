@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { InferGetServerSidePropsType } from "next";
+import { InferGetStaticPropsType } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import { resolve } from "path";
 import Highlighted from "../components/Highlighted";
@@ -17,9 +17,9 @@ function CardItem({
   idx,
 }: {
   children: React.ReactNode;
-  mdx: InferGetServerSidePropsType<
-    typeof getServerSideProps
-  >["mdx"] extends Array<infer T>
+  mdx: InferGetStaticPropsType<typeof getStaticProps>["mdx"] extends Array<
+    infer T
+  >
     ? T
     : never;
   idx: number;
@@ -36,7 +36,7 @@ function CardItem({
       <div className="flex flex-col items-start gap-3 py-3">
         {!!mdx.mdxSource.frontmatter?.archived && (
           <div
-            className="absolute right-1 top-1 p-1 px-4 text-xs rounded-bl-sm overflow-hidden bg-primary"
+            className="absolute p-1 px-4 overflow-hidden text-xs rounded-bl-sm right-1 top-1 bg-primary"
             title="This project is no longer maintained."
           >
             Archived
@@ -49,7 +49,7 @@ function CardItem({
         >
           {mdx.mdxSource.frontmatter?.name}
         </Link>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex flex-wrap gap-2">
           {(mdx.mdxSource.frontmatter?.tags as unknown as string[])?.map(
             (tag) => (
               <span
@@ -71,7 +71,7 @@ function CardItem({
 
       <div className="line-clamp-3">{children}</div>
 
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+      <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
         <Link href={mdx.mdxSource.frontmatter?.url as string} target="_blank">
           Visit Project
         </Link>
@@ -88,7 +88,7 @@ function CardItem({
 
 export default function Stories({
   mdx,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <HeadSEO
@@ -136,7 +136,7 @@ export default function Stories({
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const dir = await readdir(resolve("mdx/projects/"));
 
   const contents = await Promise.all(
@@ -154,5 +154,6 @@ export async function getServerSideProps() {
     props: {
       mdx: contents,
     },
+    revalidate: false,
   };
 }
