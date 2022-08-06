@@ -19,7 +19,11 @@ export default function OpenSourceBanner() {
   return (
     <section className="hidden md:block prose dark:prose-invert max-w-none p-2 bg-secondary text-center w-full">
       This porfolio is open source. Feel free to check the source code on{" "}
-      <a href="https://github.com/blankart/nico-portfolio" target="_blank">
+      <a
+        href="https://github.com/blankart/nico-portfolio"
+        target="_blank"
+        rel="noreferrer"
+      >
         Github
       </a>{" "}
       🚀.
