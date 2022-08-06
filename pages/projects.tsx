@@ -103,7 +103,7 @@ export default function Story({
 
       <hr />
 
-      <h2 className="sticky top-0 z-[11] block bg-slate-900 py-2">
+      <h2 className="sticky top-0 z-[11] block bg-dark py-2">
         Personal Projects
       </h2>
 
@@ -117,7 +117,7 @@ export default function Story({
           ))}
       </div>
 
-      <h2 className="sticky top-0 z-[11] block bg-slate-900 py-2">
+      <h2 className="sticky top-0 z-[11] block bg-dark py-2">
         Work-related Projects
       </h2>
 

@@ -9,8 +9,9 @@ module.exports = {
     extend: {
       colors: (theme) => {
         return {
-          "primary": theme.colors.orange['600'],
+          "primary": theme.colors.yellow['600'],
           "secondary": theme.colors.blue['700'],  
+          "dark": theme.colors.slate['900'],
         }
       }
     },

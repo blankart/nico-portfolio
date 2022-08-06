@@ -83,7 +83,7 @@ const _Menu = () => {
       {open && (
         <div
           ref={linksRef}
-          className="flex flex-col min-w-[150px] shadow-lg absolute right-0 bg-white dark:bg-slate-900 my-2 p-4 items-start rounded-md"
+          className="flex flex-col min-w-[150px] shadow-lg absolute right-0 bg-white dark:bg-dark my-2 p-4 items-start rounded-md"
         >
           <Links />
         </div>
