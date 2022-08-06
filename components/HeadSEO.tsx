@@ -8,7 +8,7 @@ interface HeadSEOProps {
 }
 
 export const TITLE = "Nico Mendoza";
-export const URL = "https://nico-mendoza.vercel.app";
+export const URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const DESCRIPTION =
   "Nico Mendoza is a full-stack web developer and a software engineer.";
 
