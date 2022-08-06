@@ -51,7 +51,7 @@ export default function Story(props: StoryProps) {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              <Link href="/story" passHref>
+              <Link href="/stories" passHref>
                 <a className="ml-1 text-sm font-medium inline-block align-middle text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">
                   Story
                 </a>

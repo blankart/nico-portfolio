@@ -44,7 +44,7 @@ function CardItem({
 
       <Link
         asLink
-        href={"/story/" + mdx.slug}
+        href={"/stories/" + mdx.slug}
         className="text-2xl max-w-[max-content]"
       >
         {mdx.mdxSource.frontmatter?.title}
@@ -59,7 +59,11 @@ function CardItem({
         {mdx.mdxSource.frontmatter?.description}
       </div>
 
-      <Link className="max-w-[max-content]" asLink href={"/story/" + mdx.slug}>
+      <Link
+        className="max-w-[max-content]"
+        asLink
+        href={"/stories/" + mdx.slug}
+      >
         Read more
       </Link>
     </div>
@@ -73,7 +77,7 @@ export default function Blog({
     <>
       <HeadSEO
         title={"Stories - " + TITLE}
-        url={URL + "/story"}
+        url={URL + "/stories"}
         description={"Discover the latest stories from " + TITLE + "."}
       />
       <h1 className="md:text-[4rem] leading-1">
@@ -94,11 +98,11 @@ export default function Blog({
 }
 
 export async function getStaticProps() {
-  const dir = await readdir(resolve("mdx/story/"));
+  const dir = await readdir(resolve("mdx/stories/"));
 
   const contents = await Promise.all(
     dir.map(async (_dir) => {
-      const res = await readFile(resolve("mdx/story/" + _dir));
+      const res = await readFile(resolve("mdx/stories/" + _dir));
       const content = res.toString();
       const mdxSource = await serialize(content, {
         parseFrontmatter: true,

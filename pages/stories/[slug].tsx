@@ -16,7 +16,7 @@ export default function StoryItem({
       <HeadSEO
         title={(source.frontmatter?.title || "Untitled") + " - " + TITLE}
         description={source.frontmatter?.description}
-        url={URL + "/story/" + slug}
+        url={URL + "/stories/" + slug}
       />
       <Story meta={source.frontmatter as any}>
         <MDXRemote {...source} components={components as any} />
@@ -26,7 +26,7 @@ export default function StoryItem({
 }
 
 export async function getStaticPaths() {
-  const dir = await readdir(resolve("mdx/story/"));
+  const dir = await readdir(resolve("mdx/stories/"));
   return {
     paths: dir.map((_dir) => ({ params: { slug: _dir.split(".")[0] } })),
     fallback: false,
@@ -34,7 +34,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(ctx: any) {
-  const res = await readFile(resolve("mdx/story/" + ctx.params.slug + ".mdx"));
+  const res = await readFile(
+    resolve("mdx/stories/" + ctx.params.slug + ".mdx")
+  );
   const mdxSource = await serialize(res.toString(), {
     parseFrontmatter: true,
   });

@@ -86,7 +86,7 @@ function CardItem({
   );
 }
 
-export default function Story({
+export default function Stories({
   mdx,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (

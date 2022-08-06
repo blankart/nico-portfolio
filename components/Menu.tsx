@@ -6,7 +6,7 @@ import classNames from "classnames";
 const LINKS: { label: string; href: string }[] = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
-  { label: "Story", href: "/story" },
+  { label: "Stories", href: "/stories" },
 ];
 
 const Links = () => {
