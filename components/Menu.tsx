@@ -1,4 +1,3 @@
-import { FaArrowRight } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "./Link";
 import { useEffect, useRef, useState } from "react";

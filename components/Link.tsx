@@ -23,11 +23,11 @@ export default function Link({
     return (
       <span
         className={classNames(
-          "inline text-blue-600 dark:text-blue-400 duration-100 underline font-[500]",
+          "inline text-blue-600 dark:text-blue-400 group duration-100 underline font-[500]",
           className
         )}
       >
-        {children}{" "}
+        {children}
         <FaArrowRight className="opacity-0 translate-y-2 ml-2 inline-block mb-1" />
       </span>
     );
@@ -38,11 +38,11 @@ export default function Link({
       <NextLink target={target} href={href} passHref>
         <a
           className={classNames(
-            "inline hover:text-blue-600 dark:hover:text-blue-400 group duration-100",
+            "inline hover:text-blue-600 dark:hover:text-blue-400 group duration-100 no-underline",
             className
           )}
         >
-          {children}{" "}
+          <span className="underline">{children}</span>
           <FaArrowRight className="opacity-0 translate-y-2 group-hover:opacity-100 duration-100 group-hover:translate-y-0 ml-2 inline-block mb-1" />
         </a>
       </NextLink>
@@ -51,13 +51,13 @@ export default function Link({
   return (
     <a
       className={classNames(
-        "inline hover:text-blue-600 dark:hover:text-blue-400 group duration-100",
+        "inline hover:text-blue-600 dark:hover:text-blue-400 group duration-100 no-underline",
         className
       )}
       href={href}
       target={target}
     >
-      {children}{" "}
+      <span className="underline">{children}</span>
       <FaArrowRight className="opacity-0 translate-y-2 group-hover:opacity-100 duration-100 group-hover:translate-y-0 ml-2 inline-block mb-1" />
     </a>
   );
