@@ -59,7 +59,7 @@ function CardItem({
         {mdx.mdxSource.frontmatter?.date}
       </p>
 
-      <div className="line-clamp-3">{children}</div>
+      <div className="line-clamp-3 max-h-[7rem]">{children}</div>
 
       <Link className="max-w-[max-content]" asLink href={"/story/" + mdx.slug}>
         Read more
