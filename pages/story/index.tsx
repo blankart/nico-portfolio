@@ -91,6 +91,7 @@ export default function Blog({
           <CardItem key={i} mdx={mdx} idx={i}>
             <MDXRemote
               {...mdx.mdxSource}
+              lazy
               components={
                 {
                   // Hide heading tags from MDX
@@ -116,7 +117,8 @@ export async function getStaticProps() {
   const contents = await Promise.all(
     dir.map(async (_dir) => {
       const res = await readFile(resolve("mdx/story/" + _dir));
-      const mdxSource = await serialize(res.toString(), {
+      const content = res.toString();
+      const mdxSource = await serialize(content, {
         parseFrontmatter: true,
       });
 
