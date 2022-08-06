@@ -5,14 +5,21 @@ import { components } from "../_app";
 import { readdir, readFile } from "fs/promises";
 import { resolve } from "path";
 import Story from "../../components/Story";
+import HeadSEO, { TITLE } from "../../components/HeadSEO";
 
-export default function Cool({
+export default function StoryItem({
   source,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Story meta={source.frontmatter as any}>
-      <MDXRemote {...source} components={components as any} />
-    </Story>
+    <>
+      <HeadSEO
+        title={(source.frontmatter?.title || "Untitled") + " - " + TITLE}
+        description={source.frontmatter?.description}
+      />
+      <Story meta={source.frontmatter as any}>
+        <MDXRemote {...source} components={components as any} />
+      </Story>
+    </>
   );
 }
 

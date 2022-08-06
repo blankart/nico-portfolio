@@ -5,10 +5,11 @@ import { resolve } from "path";
 import Highlighted from "../components/Highlighted";
 import { MDXRemote } from "next-mdx-remote";
 import { components } from "./_app";
-import NextLink from "next/link";
 import Img from "../components/Img";
 import classNames from "classnames";
 import Link from "../components/Link";
+import Head from "next/head";
+import HeadSEO, { TITLE, URL } from "../components/HeadSEO";
 
 function CardItem({
   children,
@@ -90,6 +91,11 @@ export default function Story({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
+      <HeadSEO
+        title={"Projects - " + TITLE}
+        url={URL + "/projects"}
+        description={`Some of ${TITLE}'s projects which he have worked on in the past.`}
+      />
       <h1 className="md:text-[4rem] leading-1">
         These are some of the <Highlighted>projects</Highlighted> which
         I&apos;ve worked on in the past.

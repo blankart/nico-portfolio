@@ -9,6 +9,8 @@ import Img from "../../components/Img";
 import classNames from "classnames";
 import Link from "../../components/Link";
 import dayjs from "dayjs";
+import HeadSEO, { TITLE } from "../../components/HeadSEO";
+import { URL } from "../../components/HeadSEO";
 
 function CardItem({
   children,
@@ -63,6 +65,11 @@ export default function Blog({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
+      <HeadSEO
+        title={"Stories - " + TITLE}
+        url={URL + "/story"}
+        description={"Discover the latest stories from " + TITLE + "."}
+      />
       <h1 className="md:text-[4rem] leading-1">
         Discover my latest <Highlighted>stories</Highlighted>.
       </h1>

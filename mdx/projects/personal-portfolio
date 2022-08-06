@@ -1,0 +1,9 @@
+---
+name: My Personal Portfolio
+description: My personal portfolio.
+url: https://nico-mendoza.vercel.app/
+source_code: https://github.com/blankart/nico-portfolio
+tags: ["React.JS", "Next.JS", "MDX"]
+category: "personal"
+---
+

@@ -5,6 +5,8 @@ import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import Img from "../components/Img";
 import Pre from "../components/Pre";
 import OpenSourceBanner from "../components/OpenSourceBanner";
+import Head from "next/head";
+import HeadSEO from "../components/HeadSEO";
 
 export const components: Parameters<typeof useMDXComponents>[0] = {
   pre: Pre,
@@ -15,6 +17,7 @@ export const components: Parameters<typeof useMDXComponents>[0] = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <HeadSEO />
       <OpenSourceBanner />
       <main className="scroll-smooth min-h-screen flex justify-center p-4 md:p-10 py-10 relative">
         <Menu />
