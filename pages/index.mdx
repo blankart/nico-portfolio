@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Highlighted from "../components/Highlighted";
+import HeadSEO, { TITLE } from "../components/HeadSEO";
 import dynamic from "next/dynamic";
 import SocialButtons from "../components/SocialButtons";
 
@@ -30,6 +31,8 @@ export const Calendar = dynamic(
     ssr: false,
   }
 );
+
+<HeadSEO title={"My Personal Portfolio - " + TITLE} />
 
 <h1 className="md:text-[4rem] leading-1">
   Hello, I'm <br />
