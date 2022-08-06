@@ -3,8 +3,6 @@ import { InferGetStaticPropsType } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import { resolve } from "path";
 import Highlighted from "../../components/Highlighted";
-import { MDXRemote } from "next-mdx-remote";
-import { components } from "../_app";
 import Img from "../../components/Img";
 import classNames from "classnames";
 import Link from "../../components/Link";
@@ -13,11 +11,9 @@ import HeadSEO, { TITLE } from "../../components/HeadSEO";
 import { URL } from "../../components/HeadSEO";
 
 function CardItem({
-  children,
   mdx,
   idx,
 }: {
-  children: React.ReactNode;
   mdx: InferGetStaticPropsType<typeof getStaticProps>["mdx"] extends Array<
     infer T
   >
@@ -59,7 +55,9 @@ function CardItem({
         {mdx.mdxSource.frontmatter?.date}
       </p>
 
-      <div className="line-clamp-3 max-h-[7rem]">{children}</div>
+      <div className="line-clamp-3 max-h-[7rem]">
+        {mdx.mdxSource.frontmatter?.description}
+      </div>
 
       <Link className="max-w-[max-content]" asLink href={"/story/" + mdx.slug}>
         Read more
@@ -88,23 +86,7 @@ export default function Blog({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {mdx.map((mdx, i) => (
-          <CardItem key={i} mdx={mdx} idx={i}>
-            <MDXRemote
-              {...mdx.mdxSource}
-              lazy
-              components={
-                {
-                  // Hide heading tags from MDX
-                  ...components,
-                  h2: () => "",
-                  h3: () => "",
-                  h4: () => "",
-                  h5: () => "",
-                  h6: () => "",
-                } as any
-              }
-            />
-          </CardItem>
+          <CardItem key={i} mdx={mdx} idx={i} />
         ))}
       </div>
     </>
