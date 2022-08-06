@@ -101,6 +101,8 @@ export default function Story({
         I&apos;ve worked on in the past.
       </h1>
 
+      <hr />
+
       <h2 className="sticky top-0 z-[11] block bg-slate-900 py-2">
         Personal Projects
       </h2>
