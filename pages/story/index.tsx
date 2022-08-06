@@ -34,10 +34,22 @@ function CardItem({
         "dark:bg-primary": idx % 3 === 2,
       })}
     >
+      {mdx.mdxSource.frontmatter?.thumbnail ? (
+        <Img
+          src={mdx.mdxSource.frontmatter?.thumbnail}
+          loading="lazy"
+          width={100}
+          height={55}
+          layout="responsive"
+        />
+      ) : null}
+
+      <div className="mt-4" />
+
       <Link
         asLink
         href={"/story/" + mdx.slug}
-        className="text-2xl pb-2 !m-0 max-w-[max-content]"
+        className="text-2xl max-w-[max-content]"
       >
         {mdx.mdxSource.frontmatter?.title}
       </Link>
@@ -46,10 +58,6 @@ function CardItem({
         By {mdx.mdxSource.frontmatter?.author} ·{" "}
         {mdx.mdxSource.frontmatter?.date}
       </p>
-
-      {mdx.mdxSource.frontmatter?.thumbnail ? (
-        <Img src={mdx.mdxSource.frontmatter?.thumbnail} loading="lazy" />
-      ) : null}
 
       <div className="line-clamp-3">{children}</div>
 
@@ -71,6 +79,7 @@ export default function Blog({
         description={"Discover the latest stories from " + TITLE + "."}
       />
       <h1 className="md:text-[4rem] leading-1">
+        I love sharing my <Highlighted>development journey</Highlighted>.{" "}
         Discover my latest <Highlighted>stories</Highlighted>.
       </h1>
 

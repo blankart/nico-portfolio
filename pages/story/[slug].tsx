@@ -5,16 +5,18 @@ import { components } from "../_app";
 import { readdir, readFile } from "fs/promises";
 import { resolve } from "path";
 import Story from "../../components/Story";
-import HeadSEO, { TITLE } from "../../components/HeadSEO";
+import HeadSEO, { TITLE, URL } from "../../components/HeadSEO";
 
 export default function StoryItem({
   source,
+  slug,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <HeadSEO
         title={(source.frontmatter?.title || "Untitled") + " - " + TITLE}
         description={source.frontmatter?.description}
+        url={URL + "/story/" + slug}
       />
       <Story meta={source.frontmatter as any}>
         <MDXRemote {...source} components={components as any} />
@@ -37,5 +39,5 @@ export async function getStaticProps(ctx: any) {
     parseFrontmatter: true,
   });
 
-  return { props: { source: mdxSource } };
+  return { props: { source: mdxSource, slug: ctx.params.slug } };
 }
