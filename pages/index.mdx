@@ -29,6 +29,11 @@ export const Calendar = dynamic(
   () => import("react-github-contribution-calendar"),
   {
     ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center w-full min-h-[110px]">
+        Loading...
+      </div>
+    ),
   }
 );
 
@@ -56,6 +61,15 @@ export const Calendar = dynamic(
 quality mentor, coffee lover.
 
 I am currently working full-time @ <a href="https://cryptojobslist.com/" target="_blank">Crypto Jobs List</a>{" "}🚀
+
+<Calendar values={props.values} until={props.until} panelColors={panelColors} />
+
+<Highlighted>{props.totalContributions}</Highlighted> contributions on GitHub for
+the past {Object.keys(props.values).length} days.
+
+## Education
+
+I took up BS in Computer Science from the <Highlighted>University of the Philippines - Manila</Highlighted>, but I have been coding since I was 14 years old.
 
 export async function getStaticProps() {
   const headers = {
@@ -108,12 +122,3 @@ export async function getStaticProps() {
     revalidate: 60 * 1000 * 1000 * 24,
   };
 }
-
-<Calendar values={props.values} until={props.until} panelColors={panelColors} />
-
-<Highlighted>{props.totalContributions}</Highlighted> contributions on GitHub for
-the past {Object.keys(props.values).length} days.
-
-## Education
-
-I took up BS in Computer Science from the <Highlighted>University of the Philippines - Manila</Highlighted>, but I have been coding since I was 14 years old.
