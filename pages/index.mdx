@@ -119,6 +119,6 @@ export async function getStaticProps() {
       until: Object.keys(values)[Object.keys(values).length - 1],
       totalContributions,
     },
-    revalidate: 1000 * 60 * 60 * 24,
+    revalidate: 60 * 60 * 24,
   };
 }
