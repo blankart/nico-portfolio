@@ -1,105 +1,41 @@
-import { GiHamburgerMenu } from "react-icons/gi";
-import Link from "./Link";
-import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
 import classNames from "classnames";
-const LINKS: { label: string; href: string }[] = [
+
+const NAV = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Stories", href: "/stories" },
 ];
 
-const Links = () => {
-  const router = useRouter();
-  return (
-    <>
-      {LINKS.map(({ label, href }) => (
-        <Link
-          isActive={router.pathname === href}
-          className="text-md md:text-2xl whitespace-nowrap"
-          href={href}
-          asLink
-          key={href}
-        >
-          {label}
-        </Link>
-      ))}
-    </>
-  );
-};
-
-const _Menu = () => {
-  const [open, setOpen] = useState(false);
-  const [onTop, setOnTop] = useState(true);
-  const linksRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const listener = (e: any) => {
-      if (
-        open &&
-        e.target !== linksRef.current &&
-        e.target.closest("button") !== buttonRef.current
-      )
-        setOpen(false);
-    };
-
-    window.addEventListener("click", listener);
-
-    return () => {
-      window.removeEventListener("click", listener);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    const listener = (e: any) => {
-      if (e.currentTarget.scrollY === 0) {
-        if (!onTop) setOnTop(true);
-      } else {
-        if (onTop) setOnTop(false);
-      }
-    };
-
-    window.addEventListener("scroll", listener);
-
-    return () => {
-      window.removeEventListener("scroll", listener);
-    };
-  }, [onTop]);
-
-  return (
-    <div className="fixed z-[100] right-5 top-2 prose dark:prose-invert md:hidden">
-      <button
-        aria-label="Menu"
-        ref={buttonRef}
-        className={classNames(
-          "cursor-pointer hover:opacity-80 bg-gradient-to-r from-secondary to-primary p-2 shadow-lg",
-          onTop && "bg-none shadow-none"
-        )}
-        onClick={() => setOpen(!open)}
-      >
-        <GiHamburgerMenu className="dark:text-white" />
-      </button>
-      {open && (
-        <div
-          ref={linksRef}
-          className="flex flex-col min-w-[150px] shadow-lg absolute right-0 bg-white dark:bg-dark my-2 p-4 items-start rounded-md"
-        >
-          <Links />
-        </div>
-      )}
-    </div>
-  );
-};
-
 export default function Menu() {
-  return (
-    <>
-      <div className="hidden md:flex sticky top-0 h-screen prose dark:prose-invert p-4 py-10 flex-col gap-y-4 justify-center items-end">
-        <Links />
-      </div>
+  const router = useRouter();
 
-      <_Menu />
-    </>
+  return (
+    <header className="max-w-[640px] mx-auto px-5 pt-8 md:pt-12">
+      <nav className="flex items-center gap-6">
+        {NAV.map(({ label, href }) => {
+          const isActive =
+            href === "/"
+              ? router.pathname === "/"
+              : router.pathname.startsWith(href);
+
+          return (
+            <NextLink key={href} href={href} passHref>
+              <a
+                className={classNames(
+                  "text-sm no-underline transition-colors duration-150",
+                  isActive
+                    ? "text-ink"
+                    : "text-ink-tertiary hover:text-ink-secondary"
+                )}
+              >
+                {label}
+              </a>
+            </NextLink>
+          );
+        })}
+      </nav>
+    </header>
   );
 }

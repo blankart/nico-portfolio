@@ -4,10 +4,52 @@
 
 @layer base {
   html {
-    @apply bg-dark;
+    background-color: #1a1a1a;
+    color: #e8e8e8;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   pre {
-    @apply w-[95vw] md:w-[70vw] lg:w-full;
+    @apply w-full;
   }
+
+  .prose {
+    --tw-prose-body: #a0a0a0;
+    --tw-prose-headings: #e8e8e8;
+    --tw-prose-links: #7c9bb5;
+    --tw-prose-bold: #e8e8e8;
+    --tw-prose-counters: #707070;
+    --tw-prose-bullets: #4a4a4a;
+    --tw-prose-hr: rgba(255, 255, 255, 0.07);
+    --tw-prose-quotes: #a0a0a0;
+    --tw-prose-quote-borders: rgba(255, 255, 255, 0.12);
+    --tw-prose-code: #e8e8e8;
+    --tw-prose-pre-code: #a0a0a0;
+    --tw-prose-pre-bg: #222;
+    --tw-prose-th-borders: rgba(255, 255, 255, 0.12);
+    --tw-prose-td-borders: rgba(255, 255, 255, 0.07);
+  }
+
+  .prose-invert {
+    --tw-prose-invert-body: #a0a0a0;
+    --tw-prose-invert-headings: #e8e8e8;
+    --tw-prose-invert-links: #7c9bb5;
+    --tw-prose-invert-bold: #e8e8e8;
+    --tw-prose-invert-counters: #707070;
+    --tw-prose-invert-bullets: #4a4a4a;
+    --tw-prose-invert-hr: rgba(255, 255, 255, 0.07);
+    --tw-prose-invert-quotes: #a0a0a0;
+    --tw-prose-invert-quote-borders: rgba(255, 255, 255, 0.12);
+    --tw-prose-invert-code: #e8e8e8;
+    --tw-prose-invert-pre-code: #a0a0a0;
+    --tw-prose-invert-pre-bg: #222;
+    --tw-prose-invert-th-borders: rgba(255, 255, 255, 0.12);
+    --tw-prose-invert-td-borders: rgba(255, 255, 255, 0.07);
+  }
+}
+
+::selection {
+  background: rgba(124, 155, 181, 0.3);
 }

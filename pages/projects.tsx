@@ -2,93 +2,64 @@ import { readdir, readFile } from "fs/promises";
 import { InferGetStaticPropsType } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import { resolve } from "path";
-import Highlighted from "../components/Highlighted";
-import { MDXRemote } from "next-mdx-remote";
-import { components } from "./_app";
-import Img from "../components/Img";
-import classNames from "classnames";
-import Link from "../components/Link";
-import Head from "next/head";
 import HeadSEO, { TITLE, URL } from "../components/HeadSEO";
 
-function CardItem({
-  children,
-  mdx,
-  idx,
+function ProjectItem({
+  frontmatter,
 }: {
-  children: React.ReactNode;
-  mdx: InferGetStaticPropsType<typeof getStaticProps>["mdx"] extends Array<
-    infer T
-  >
-    ? T
-    : never;
-  idx: number;
+  frontmatter: Record<string, any>;
 }) {
+  const tags = (frontmatter?.tags as string[]) || [];
+
   return (
-    <div
-      className={classNames("bg-white w-full px-4 py-6 relative", {
-        "dark:bg-gradient-to-r dark:from-primary dark:to-secondary":
-          idx % 3 === 0,
-        "dark:bg-secondary": idx % 3 === 1,
-        "dark:bg-primary": idx % 3 === 2,
-      })}
-    >
-      <div className="flex flex-col items-start gap-3 py-3">
-        {!!mdx.mdxSource.frontmatter?.archived && (
-          <div
-            className="absolute p-1 px-4 overflow-hidden text-xs rounded-bl-sm right-1 top-1 bg-primary"
-            title="This project is no longer maintained."
+    <div className="py-4">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <a
+            href={frontmatter?.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-ink font-medium hover:text-accent transition-colors duration-150 no-underline hover:underline"
           >
-            Archived
-          </div>
-        )}
-        <Link
-          href={mdx.mdxSource.frontmatter?.url as string}
-          target="_blank"
-          className="max-w-fit text-2xl pb-2 !m-0 !p-0"
-        >
-          {mdx.mdxSource.frontmatter?.name}
-        </Link>
-        <div className="flex flex-wrap gap-2">
-          {(mdx.mdxSource.frontmatter?.tags as unknown as string[])?.map(
-            (tag) => (
-              <span
-                key={tag}
-                className="text-xs text-gray-200 border-gray-200 px-4 py-1 border-[1px] rounded-sm whitespace-nowrap"
-              >
-                {tag}
-              </span>
-            )
+            {frontmatter?.name}
+          </a>
+          {frontmatter?.archived && (
+            <span className="text-xs text-ink-faint ml-2">archived</span>
           )}
         </div>
-      </div>
-
-      <p className="text-white">{mdx.mdxSource.frontmatter?.description}</p>
-
-      {mdx.mdxSource.frontmatter?.thumbnail ? (
-        <Img src={mdx.mdxSource.frontmatter?.thumbnail} loading="lazy" />
-      ) : null}
-
-      <div className="line-clamp-3">{children}</div>
-
-      <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
-        <Link href={mdx.mdxSource.frontmatter?.url as string} target="_blank">
-          Visit Project
-        </Link>
-
-        {!!mdx.mdxSource.frontmatter?.source_code && (
-          <Link href={mdx.mdxSource.frontmatter?.source_code} target="_blank">
-            View Source Code
-          </Link>
+        {frontmatter?.source_code && (
+          <a
+            href={frontmatter.source_code}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs text-ink-tertiary hover:text-ink-secondary transition-colors no-underline hover:underline shrink-0"
+          >
+            source
+          </a>
         )}
       </div>
+      <p className="text-sm text-ink-secondary mt-1 mb-0 leading-relaxed">
+        {frontmatter?.description}
+      </p>
+      {tags.length > 0 && (
+        <p className="text-xs text-ink-faint mt-2 mb-0">
+          {tags.join(" · ")}
+        </p>
+      )}
     </div>
   );
 }
 
-export default function Stories({
+export default function Projects({
   mdx,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const personal = mdx.filter(
+    (m) => m.mdxSource.frontmatter?.category === "personal"
+  );
+  const work = mdx.filter(
+    (m) => m.mdxSource.frontmatter?.category === "work-related"
+  );
+
   return (
     <>
       <HeadSEO
@@ -96,41 +67,36 @@ export default function Stories({
         url={URL + "/projects"}
         description={`Some of ${TITLE}'s projects which he have worked on in the past.`}
       />
-      <h1 className="md:text-[4rem] leading-1">
-        These are some of the <Highlighted>projects</Highlighted> which
-        I&apos;ve worked on in the past.
-      </h1>
 
-      <hr />
+      <div className="not-prose">
+        <h1 className="text-3xl font-bold text-ink mb-3 leading-snug">
+          Projects
+        </h1>
+        <p className="text-ink-secondary mb-10">
+          Things I&apos;ve built — personal and professional.
+        </p>
 
-      <h2 className="sticky top-0 z-[11] block bg-dark py-2">
-        Personal Projects
-      </h2>
-
-      <div className="grid grid-cols-1 gap-4">
-        {mdx
-          .filter((_mdx) => _mdx.mdxSource.frontmatter?.category === "personal")
-          .map((mdx, i) => (
-            <CardItem key={i} idx={i} mdx={mdx}>
-              <MDXRemote {...mdx.mdxSource} components={components as any} />
-            </CardItem>
+        {/* Personal */}
+        <h2 className="text-sm font-medium text-ink-secondary mb-0">
+          Personal
+        </h2>
+        <div className="divide-y divide-rule">
+          {personal.map((m, i) => (
+            <ProjectItem key={i} frontmatter={m.mdxSource.frontmatter || {}} />
           ))}
-      </div>
+        </div>
 
-      <h2 className="sticky top-0 z-[11] block bg-dark py-2">
-        Work-related Projects
-      </h2>
+        <hr className="border-t border-rule my-10" />
 
-      <div className="grid grid-cols-1 gap-4">
-        {mdx
-          .filter(
-            (_mdx) => _mdx.mdxSource.frontmatter?.category === "work-related"
-          )
-          .map((mdx, i) => (
-            <CardItem key={i} idx={i} mdx={mdx}>
-              <MDXRemote {...mdx.mdxSource} components={components as any} />
-            </CardItem>
+        {/* Work */}
+        <h2 className="text-sm font-medium text-ink-secondary mb-0">
+          Work
+        </h2>
+        <div className="divide-y divide-rule">
+          {work.map((m, i) => (
+            <ProjectItem key={i} frontmatter={m.mdxSource.frontmatter || {}} />
           ))}
+        </div>
       </div>
     </>
   );

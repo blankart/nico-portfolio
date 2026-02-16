@@ -2,75 +2,37 @@ import { readdir, readFile } from "fs/promises";
 import { InferGetStaticPropsType } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import { resolve } from "path";
-import Highlighted from "../../components/Highlighted";
-import Img from "../../components/Img";
-import classNames from "classnames";
-import Link from "../../components/Link";
 import dayjs from "dayjs";
-import HeadSEO, { TITLE } from "../../components/HeadSEO";
-import { URL } from "../../components/HeadSEO";
+import NextLink from "next/link";
+import HeadSEO, { TITLE, URL } from "../../components/HeadSEO";
 
-function CardItem({
-  mdx,
-  idx,
+function StoryItem({
+  frontmatter,
+  slug,
 }: {
-  mdx: InferGetStaticPropsType<typeof getStaticProps>["mdx"] extends Array<
-    infer T
-  >
-    ? T
-    : never;
-  idx: number;
+  frontmatter: Record<string, any>;
+  slug: string;
 }) {
+  const date = dayjs(frontmatter?.date);
+
   return (
-    <div
-      className={classNames("bg-white w-full px-4 py-6", {
-        "dark:bg-gradient-to-r dark:from-primary dark:to-secondary":
-          idx % 3 === 0,
-        "dark:bg-secondary": idx % 3 === 1,
-        "dark:bg-primary": idx % 3 === 2,
-      })}
-    >
-      {mdx.mdxSource.frontmatter?.thumbnail ? (
-        <Img
-          src={mdx.mdxSource.frontmatter?.thumbnail}
-          loading="lazy"
-          width={100}
-          height={55}
-          layout="responsive"
-        />
-      ) : null}
-
-      <div className="mt-4" />
-
-      <Link
-        asLink
-        href={"/stories/" + mdx.slug}
-        className="text-2xl max-w-[max-content]"
-      >
-        {mdx.mdxSource.frontmatter?.title}
-      </Link>
-
-      <p>
-        By {mdx.mdxSource.frontmatter?.author} ·{" "}
-        {mdx.mdxSource.frontmatter?.date}
+    <div className="py-4">
+      <NextLink href={"/stories/" + slug} passHref>
+        <a className="text-ink font-medium hover:text-accent transition-colors duration-150 no-underline hover:underline">
+          {frontmatter?.title}
+        </a>
+      </NextLink>
+      <p className="text-sm text-ink-secondary mt-1 mb-0 leading-relaxed">
+        {frontmatter?.description}
       </p>
-
-      <div className="line-clamp-3 max-h-[7rem]">
-        {mdx.mdxSource.frontmatter?.description}
-      </div>
-
-      <Link
-        className="max-w-[max-content]"
-        asLink
-        href={"/stories/" + mdx.slug}
-      >
-        Read more
-      </Link>
+      <p className="text-xs text-ink-faint mt-2 mb-0">
+        {date.format("MMMM D, YYYY")}
+      </p>
     </div>
   );
 }
 
-export default function Blog({
+export default function Stories({
   mdx,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -80,18 +42,24 @@ export default function Blog({
         url={URL + "/stories"}
         description={"Discover the latest stories from " + TITLE + "."}
       />
-      <h1 className="md:text-[4rem] leading-1">
-        I love sharing my <Highlighted>development journey</Highlighted>.{" "}
-        Discover my latest <Highlighted>stories</Highlighted>.
-      </h1>
 
-      <hr />
-      <h2>Featured Stories</h2>
+      <div className="not-prose">
+        <h1 className="text-3xl font-bold text-ink mb-3 leading-snug">
+          Stories
+        </h1>
+        <p className="text-ink-secondary mb-10">
+          Writing about the development journey.
+        </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {mdx.map((mdx, i) => (
-          <CardItem key={i} mdx={mdx} idx={i} />
-        ))}
+        <div className="divide-y divide-rule">
+          {mdx.map((m, i) => (
+            <StoryItem
+              key={i}
+              frontmatter={m.mdxSource.frontmatter || {}}
+              slug={m.slug}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
