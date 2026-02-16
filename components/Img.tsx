@@ -1,19 +1,16 @@
-import Image from "next/image";
-
 export default function Img(props: any) {
   let src = props.src;
-  if (!src?.startsWith("http")) {
-    src = require("../public/" + props.src)?.default?.src;
+  if (src && !src.startsWith("http")) {
+    src = "/" + src;
   }
 
   return (
-    <Image
-      alt={props.alt}
-      {...props}
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={src}
-      layout={props.layout ?? "responsive"}
-      height={props.height ?? 50}
-      width={props.width ?? 100}
+      alt={props.alt || ""}
+      loading="lazy"
+      className="w-full h-auto rounded"
     />
   );
 }

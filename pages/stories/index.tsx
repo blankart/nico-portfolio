@@ -83,8 +83,8 @@ export async function getStaticProps() {
   return {
     props: {
       mdx: contents.sort((a, b) => {
-        const aDate = dayjs(a.mdxSource.frontmatter?.date).toDate();
-        const bDate = dayjs(b.mdxSource.frontmatter?.date).toDate();
+        const aDate = dayjs(a.mdxSource.frontmatter?.date as string).toDate();
+        const bDate = dayjs(b.mdxSource.frontmatter?.date as string).toDate();
         return bDate.getTime() - aDate.getTime();
       }),
     },

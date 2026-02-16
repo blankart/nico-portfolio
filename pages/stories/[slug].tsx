@@ -14,8 +14,8 @@ export default function StoryItem({
   return (
     <>
       <HeadSEO
-        title={(source.frontmatter?.title || "Untitled") + " - " + TITLE}
-        description={source.frontmatter?.description}
+        title={((source.frontmatter as any)?.title || "Untitled") + " - " + TITLE}
+        description={(source.frontmatter as any)?.description}
         url={URL + "/stories/" + slug}
       />
       <Story meta={source.frontmatter as any}>
