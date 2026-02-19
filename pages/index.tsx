@@ -60,12 +60,12 @@ export default function Home({
           GraphQL, and TypeScript with a focus on SEO, performance, and CI/CD.
           Currently at{" "}
           <a
-            href="https://cryptojobslist.com/"
+            href="https://thenetwork.co.nz/"
             target="_blank"
             rel="noreferrer"
             className="text-accent hover:text-accent-hover hover:underline"
           >
-            Crypto Jobs List
+            The Network
           </a>
           .
         </p>
