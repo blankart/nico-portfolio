@@ -48,7 +48,7 @@ export default function Stories({
           Stories
         </h1>
         <p className="text-ink-secondary mb-10">
-          Writing about the development journey.
+          Writing about building products, shipping ideas, and how coding keeps changing.
         </p>
 
         <div className="divide-y divide-rule">
